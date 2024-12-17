@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook</title>
+    <link rel="stylesheet" href="static/style.css">
+
+</head>
+<body>
+    <h2>Welcome, {{ session['username'] }}</h2>
+    <a href="{{ url_for('logout') }}">Logout</a><br>
+    <a href="{{ url_for('add_guest') }}">Add Guest</a><br>
+    <form method="POST" action="{{ url_for('search') }}">
+        <input type="text" name="search" placeholder="Search by Name">
+        <button type="submit">Search</button>
+    </form>
+    <h3>Guest List:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Guest No</th>
+                <th>Guest Name</th>
+                <th>Company</th>
+                <th>Address</th>
+                <th>Contact No</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for guest in guests %}
+            <tr>
+                <td>{{ guest.guestno }}</td>
+                <td>{{ guest.guestname }}</td>
+                <td>{{ guest.company }}</td>
+                <td>{{ guest.address }}</td>
+                <td>{{ guest.contactno }}</td>
+                <td><a href="{{ url_for('delete_guest', id=guest.id) }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
